@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){ 
+	$('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+</head>
+<body>
+<div class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8"><h2>Confirmación <b>Matricula</b></h2></div>
+                    <div class="col-sm-4">
+                        <div class="search-box">
+                            <i class="material-icons">&#xE8B6;</i>
+                            <input type="text" class="form-control" (keyup)="buscarDatos($event.target.value)" placeholder="Buscar&hellip;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID<i class="fa fa-sort"></i></th>                       
+                        <th>ALUMNO<i class="fa fa-sort"></i></th>                        
+                        <th>CURSO<i class="fa fa-sort"></i></th>                        
+                        <th>INCSCRITOS<i class="fa fa-sort"></i></th>                        
+                        <th>MAXIMO<i class="fa fa-sort"></i></th>                        
+                        <th>MINIMO<i class="fa fa-sort"></i></th>                        
+                        <th>ESTADO<i class="fa fa-sort"></i></th>                        
+                        <th>ACCION<i class="fa fa-sort"></i></th>                         
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let col of datasource">
+                        <td>{{col.idmatricula}}</td>
+                        <td>{{col.alumno}}</td>
+                        <td>{{col.curso}}</td>
+                        <td>{{col.inscritos}}</td>
+                        <td>{{col.maximo}}</td>
+                        <td>{{col.minimo}}</td>
+                        <td [ngClass]="{'badge-danger': col.estado == 'RECHAZADO', 'badge-warning': col.estado == 'PENDIENTE', 'badge-success': col.estado == 'MATRICULADO'}">{{col.estado}}</td>
+                        <td style="cursor:pointer;">                        
+                            <a class="Aprueba Matricula" (click)=aprueba(col.alumno) title="View" data-toggle="tooltip"><i class="material-icons">&#xE85F;</i></a>
+                            <a class="Rechaza Matricula" (click)=rechaza(col.alumno) title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE85E;</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        -->
+        <div class="example-container mat-elevation-z8">
+            <table mat-table [dataSource]="datasource" matSort class="mat-elevation-z8">
+                <ng-container matColumnDef="idmatricula">
+                    <th mat-header-cell  *matHeaderCellDef mat-sort-header> ID </th>
+                    <td mat-cell *matCellDef="let row" > {{row.idmatricula}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="alumno">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ALUMNO </th>
+                    <td mat-cell *matCellDef="let row" > {{row.alumno}}</td>
+                </ng-container>
+                <ng-container matColumnDef="curso">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> CURSO </th>
+                    <td mat-cell *matCellDef="let row" > {{row.curso}}</td>
+                </ng-container>
+                <ng-container matColumnDef="inscritos">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> INSCRITOS </th>
+                    <td mat-cell *matCellDef="let row" > {{row.inscritos}}</td>
+                </ng-container>
+                <ng-container matColumnDef="maximo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> MAXIMO </th>
+                    <td mat-cell *matCellDef="let row" > {{row.maximo}}</td>
+                </ng-container>
+                <ng-container matColumnDef="minimo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> MINIMO </th>
+                    <td mat-cell *matCellDef="let row" > {{row.minimo}}</td>
+                </ng-container>
+                <ng-container matColumnDef="estado">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ESTADO </th>
+                    <td mat-cell *matCellDef="let row">
+                    <span class="badge" [ngClass]="{'badge-danger': row.estado == 'RECHAZADO', 'badge-warning': row.estado == 'PENDIENTE', 'badge-success': row.estado == 'MATRICULADO'}">{{row.estado}}</span>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="accion">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ACCION </th>
+                    <td mat-cell *matCellDef="let row" style="cursor:pointer;" > 
+                        <a class="Aprueba Matricula" (click)="aprueba(col.alumno)" title="View" data-toggle="tooltip"><i class="material-icons" style="color:red;" >&#xE85F;</i></a>
+                        <a class="Rechaza Matricula"  (click)="rechaza(col.alumno)" title="Edit" data-toggle="tooltip"><i class="material-icons" style="color:green;">&#xE85E;</i></a></td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columna; sticky: true;"></tr>
+                <tr mat-row *matRowDef="let row; columns: columna;"  class="example-element-row"></tr>
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No existe datos con el filtro:  "{{input.value}}"</td>
+                </tr>
+           </table>
+        </div>
+            <div class="clearfix">
+                <div class="hint-text">{{fila}} Registros encontradps</div>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+    </div>  
+</div>   
+</body>
+</html>

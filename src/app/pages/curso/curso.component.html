@@ -1,0 +1,34 @@
+<div class="row justify-content-md-center" id="Buscar Curso">
+    <div class="col-sm-4">
+        <div class="search-box">                
+            <input type="text" class="form-control" (keyup)="buscarDatos($event.target.value)" placeholder="&#xE8B6;Buscar&hellip;">
+        </div>
+    </div>
+</div>
+
+<section id="portfolio" class="bg-light" style="padding: 75px 0px;">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-center">                
+            <h2  class="text-uppercase section-heading">CURSOS</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div *ngFor="let p of cursos" class="col-sm-6 col-md-4 portfolio-item">
+            <a routerLink="/curso/{{ p.idCurso }}" class="portfolio-link" data-toggle="modal">
+                <div class="portfolio-hover">
+                    <div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div>
+                </div><img class="img-fluid" src='{{ p.imagen }}'></a>
+            <div class="portfolio-caption">
+                <h4>{{ p.nombreCurso }}</h4>
+                <p class="text-muted">{{ p.nombreSede }}</p>
+                <p class="text-muted">{{ p.frecuencia }}</p>
+                <p class="text-muted">{{ p.hora }}</p>
+                <p class="text-muted">Inicio:  {{ p.fechaInicio }}</p>
+                <p class="text-muted"><strong><em>Costo: S/.  {{ p.costo }}</em><br></strong></p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+</section>
